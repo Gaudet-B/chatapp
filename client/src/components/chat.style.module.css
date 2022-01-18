@@ -1,0 +1,10 @@
+.conversations {
+    max-height: 300px;
+    overflow: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.conversations::-webkit-scrollbar {
+    display: none;
+}
