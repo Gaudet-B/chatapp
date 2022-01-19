@@ -1,5 +1,6 @@
 package com.gaudetb.chatapp.models;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -34,7 +35,9 @@ public class Thread {
 	
 	// ============> MEMBER VARIABLES <============
 	
+	
 	private String name;
+	private ArrayList<Message> history;
 
 	// ---------------------------
 	
@@ -90,6 +93,13 @@ public class Thread {
 	}
 	
 	/**
+	 * @return the name
+	 */
+	public ArrayList<Message> getHistory() {
+		return history;
+	}
+	
+	/**
 	 * @return the creator
 	 */
 	public User getCreator() {
@@ -132,6 +142,13 @@ public class Thread {
 	 */
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	/**
+	 * @param name the name to set
+	 */
+	public void setHistory(ArrayList<Message> history) {
+		this.history = history;
 	}
 
 	/**

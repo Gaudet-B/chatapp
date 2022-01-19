@@ -11,6 +11,15 @@ function App() {
 
   useEffect(() => {
     if (sessionStorage.getItem("loggedIn")) setLoggedIn(true)
+
+    const script = document.createElement("script")
+        script.src = "https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"
+        document.body.appendChild(script)
+
+    return(
+        document.body.removeChild(script)
+    )
+
   }, [])
 
   return (

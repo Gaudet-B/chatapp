@@ -14,25 +14,34 @@ import javax.websocket.Session;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
+
 import com.gaudetb.chatapp.models.Message;
+import com.gaudetb.chatapp.models.User;
+import com.gaudetb.chatapp.services.UserService;
 import com.gaudetb.chatapp.services.MessageDecoder;
 import com.gaudetb.chatapp.services.MessageEncoder;
 
-@ServerEndpoint(value = "/chat/{username}", decoders = MessageDecoder.class, encoders = MessageEncoder.class)
+@CrossOrigin
+@ServerEndpoint(value = "/chat/{id}", decoders = MessageDecoder.class, encoders = MessageEncoder.class)
 public class ChatEndpoint {
+	
     private Session session;
     private static final Set<ChatEndpoint> chatEndpoints = new CopyOnWriteArraySet<>();
-    private static HashMap<String, String> users = new HashMap<>();
+    private static HashMap<String, User> users = new HashMap<String, User>();
 
     @OnOpen
-    public void onOpen(Session session, @PathParam("username") String username) throws IOException, EncodeException {
-
+    public void onOpen(Session session, @PathParam("id") Long id) throws IOException, EncodeException {
+    	
+    	UserService userService = new UserService();
+    	User user = userService.findOne(id);
+    	
         this.session = session;
         chatEndpoints.add(this);
-        users.put(session.getId(), username);
+        users.put(session.getId(), user);
 
         Message message = new Message();
-        message.setFrom(username);
+        message.setFrom(user);
         message.setContent("Connected!");
         broadcast(message);
     }

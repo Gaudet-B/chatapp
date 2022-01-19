@@ -1,5 +1,10 @@
+@keyframes open {
+    from {height: 1px}
+    to {height: 200px}
+}
+
 .conversations {
-    max-height: 300px;
+    max-height: 200px;
     overflow: auto;
     -ms-overflow-style: none;
     scrollbar-width: none;
@@ -7,4 +12,8 @@
 
 .conversations::-webkit-scrollbar {
     display: none;
+}
+
+.popOut {
+    animation: open 1s linear;
 }
