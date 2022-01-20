@@ -5,7 +5,7 @@ import axios from 'axios'
 
 const Form = props => {
 
-    const { setLoggedIn } = props
+    const { setLoggedIn, setLoading } = props
 
     const [ register, setRegister ] = useState(false)
     const [ formState, setFormState ] = useState({})
@@ -14,6 +14,7 @@ const Form = props => {
         withCredentials: true,
         baseURL: "http://localhost:8080/api",
         crossDomain: true,
+        
         // contentType: "application/json; charset=utf-8"
         // contentType: "application/json"
         // header: {
@@ -24,10 +25,12 @@ const Form = props => {
 
     // const navigate = useNavigate
 
-    const handleShow = () => {
+    const handleShowRegister = e => {
+        e.preventDefault()
         setRegister(true)
     }
-    const handleHide = () => {
+    const handleHideRegister = e => {
+        e.preventDefault()
         setRegister(false)
     }
 
@@ -54,12 +57,13 @@ const Form = props => {
         fetch("http://localhost:8080/api/login", reqOptions)
             .then(res => res.json())
             .then(data => {
-                console.log(data)
-                sessionStorage.setItem("id", data.id)
+                // setLoading(true)
+                // console.log(data)
                 setTimeout(() => {
                     sessionStorage.setItem("loggedIn", JSON.stringify(true))
+                    sessionStorage.setItem("id", data.id)
                     setLoggedIn(true)
-                }, 500);
+                }, 1500);
             })
             .catch(err => {console.log(err)})
             
@@ -83,9 +87,12 @@ const Form = props => {
         fetch("http://localhost:8080/api/register", reqOptions)
             .then(res => res.json())
             .then(data => {
-                setLoggedIn(true)
-                sessionStorage.setItem("id", data.id)
-                sessionStorage.setItem("loggedIn", JSON.stringify(true))
+                // setLoading(true)
+                setTimeout(() => {
+                    setLoggedIn(true)
+                    sessionStorage.setItem("id", data.id)
+                    sessionStorage.setItem("loggedIn", JSON.stringify(true))
+                }, 1500);
                 // navigate("/chat")
             })
             .catch(err => console.log(err))
@@ -151,7 +158,7 @@ const Form = props => {
                 <div className="d-flex flex-row justify-content-end">
                     <div className="d-flex flex-column me-1" style={{ width: "100%", maxWidth: "400px" }}>
                         <button type="submit" className="btn btn-primary">{(!register) ? "login" : "register" }</button>
-                        <button onClick={(!register) ? handleShow : handleHide } className="btn btn-outline-light my-2">{(!register) ? "create an account" : "back to login" } </button>
+                        <button onClick={(!register) ? handleShowRegister : handleHideRegister } className="btn btn-outline-light my-2">{(!register) ? "create an account" : "back to login" } </button>
                     </div>
                 </div>
             </form>

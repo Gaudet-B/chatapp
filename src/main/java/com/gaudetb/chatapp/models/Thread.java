@@ -22,6 +22,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 
 @Entity
 @Table(name = "users")
@@ -63,6 +65,11 @@ public class Thread {
 	
 	public Thread() {}
 	
+	public Thread(User creator, List<User> users) {
+		this.setCreator(creator);
+		this.setUsers(users);
+	}
+	
 	// ============> GETTERS & SETTERS <============
 
 	@PrePersist
@@ -102,6 +109,7 @@ public class Thread {
 	/**
 	 * @return the creator
 	 */
+	@JsonBackReference
 	public User getCreator() {
 		return creator;
 	}
@@ -109,6 +117,7 @@ public class Thread {
 	/**
 	 * @return the users
 	 */
+	@JsonBackReference
 	public List<User> getUsers() {
 		return users;
 	}

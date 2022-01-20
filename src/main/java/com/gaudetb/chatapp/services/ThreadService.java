@@ -5,12 +5,14 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import com.gaudetb.chatapp.models.Thread;
 import com.gaudetb.chatapp.models.User;
 import com.gaudetb.chatapp.repos.ThreadRepo;
 
 
+@CrossOrigin
 @Service
 public class ThreadService {
 	

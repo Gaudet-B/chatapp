@@ -8,6 +8,7 @@ import Chat from './views/Chat'
 function App() {
 
   const [ loggedIn, setLoggedIn ] = useState(false)
+  const [ loading, setLoading ] = useState(true)
 
   useEffect(() => {
     if (sessionStorage.getItem("loggedIn")) setLoggedIn(true)
@@ -26,11 +27,11 @@ function App() {
     <div className="bg-secondary App" style={{width: "100vw", minHeight: "100vh"}}>
       <BrowserRouter>
 
-        <Navigation />
+        <Navigation loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
 
         <Routes>
 
-          <Route exact path="/" element={(!loggedIn) ? <Landing setLoggedIn={setLoggedIn} /> : <Chat />} />
+          <Route exact path="/" element={(!loggedIn) ? <Landing setLoggedIn={setLoggedIn} loading={loading} setLoading={setLoading} /> : <Chat loading={loading} setLoading={setLoading} />} />
 
         </Routes>
       </BrowserRouter>

@@ -9,6 +9,9 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
@@ -18,7 +21,8 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
-//import com.gaudetb.chatapp.models.Thread;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.gaudetb.chatapp.models.Thread;
 
 
 @Entity
@@ -59,7 +63,15 @@ public class User {
 	// ============> RELATIONSHIPS <============ 
 	
 	@OneToMany(mappedBy = "creator", fetch = FetchType.LAZY)
-	private List<Thread> threadsCreated;
+	private List<com.gaudetb.chatapp.models.Thread> threadsCreated;
+	
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(
+			name = "users_threads",
+			joinColumns = @JoinColumn(name = "user_id"),
+			inverseJoinColumns = @JoinColumn(name = "thread_id")
+			)
+	private List<com.gaudetb.chatapp.models.Thread> threadsJoined;
 	
 	// ============> CONSTRUCTORS <============
 	
@@ -118,8 +130,17 @@ public class User {
 	/**
 	 * @return the threadsCreated
 	 */
-	public List<Thread> getThreadsCreated() {
+	@JsonManagedReference
+	public List<com.gaudetb.chatapp.models.Thread> getThreadsCreated() {
 		return threadsCreated;
+	}
+	
+	/**
+	 * @return the threadsJoined
+	 */
+	@JsonManagedReference
+	public List<com.gaudetb.chatapp.models.Thread> getThreadsJoined() {
+		return threadsJoined;
 	}
 
 	/**
@@ -178,8 +199,15 @@ public class User {
 	/**
 	 * @param threadsCreated the threadsCreated to set
 	 */
-	public void setThreadsCreated(List<Thread> threadsCreated) {
+	public void setThreadsCreated(List<com.gaudetb.chatapp.models.Thread> threadsCreated) {
 		this.threadsCreated = threadsCreated;
+	}
+	
+	/**
+	 * @param threadsJoined the threadsJoined to set
+	 */
+	public void setThreadsJoined(List<com.gaudetb.chatapp.models.Thread> threadsJoined) {
+		this.threadsJoined = threadsJoined;
 	}
 
 }

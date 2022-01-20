@@ -1,5 +1,6 @@
 package com.gaudetb.chatapp.services;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 import org.mindrot.jbcrypt.BCrypt;
@@ -59,6 +60,10 @@ public class UserService {
 		Optional<User> user = userRepo.findById(id);
 		if (user.isPresent()) return user.get();
 		else return null;
+	}
+	
+	public ArrayList<User> findAll() {
+		return (ArrayList<User>) userRepo.findAll();
 	}
 
 }

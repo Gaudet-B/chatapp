@@ -1,5 +1,8 @@
 package com.gaudetb.chatapp.controllers;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -40,6 +43,24 @@ public class UserController {
 		User user = userService.findOne(id);
 		
 		return new ResponseEntity<User>(user, HttpStatus.OK);
+	}
+	
+	@GetMapping("/api/getallusers")
+	public ResponseEntity<ArrayList<User>> getAllUsers() {
+		
+		ArrayList<User> users = userService.findAll();
+		
+		return new ResponseEntity<ArrayList<User>>(users, HttpStatus.OK);
+	}
+	
+	@GetMapping("/api/getthreadsbyuser/{id}")
+	public ResponseEntity<List<com.gaudetb.chatapp.models.Thread>> getAllUsers(@PathVariable("id") Long id) {
+		
+		User user = userService.findOne(id);
+		
+		List<com.gaudetb.chatapp.models.Thread> threads = user.getThreadsJoined();
+		
+		return new ResponseEntity<List<com.gaudetb.chatapp.models.Thread>>(threads, HttpStatus.OK);
 	}
 
 	// ============> ACTION ROUTES <============
