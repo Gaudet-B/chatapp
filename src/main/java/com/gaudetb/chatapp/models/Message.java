@@ -1,10 +1,17 @@
 package com.gaudetb.chatapp.models;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Message {
-    private User from;
-    private ArrayList<User> to;
+public class Message implements Serializable {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	
+	private User from;
+    private User to;
     private String content;
 
 //    @Override
@@ -16,7 +23,7 @@ public class Message {
 	
 	public Message() {}
 	
-	public Message(User from, ArrayList<User> to, String content) {
+	public Message(User from, User to, String content) {
 		this.setFrom(from);
 		this.setTo(to);
 		this.setContent(content);
@@ -31,7 +38,7 @@ public class Message {
         return from;
     }
 
-    public ArrayList<User> getTo() {
+    public User getTo() {
         return to;
     }
 
@@ -46,7 +53,7 @@ public class Message {
         this.from = from;
     }
 
-    public void setTo(ArrayList<User> to) {
+    public void setTo(User to) {
         this.to = to;
     }
 

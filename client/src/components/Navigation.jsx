@@ -15,7 +15,8 @@ const Navigation = props => {
     const handleShow = () => setShow(!show)
 
     const handleLogout = () => {
-        sessionStorage.removeItem("id")
+        // sessionStorage.removeItem("id")
+        sessionStorage.clear()
         setLoggedIn(false)
         setShow(!show)
     }

@@ -21,6 +21,14 @@
     scrollbar-width: none;
 }
 
+.history {
+    min-height: fit-content;
+    max-height: inherit;
+    overflow: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
 .conversations::-webkit-scrollbar {
     display: none;
 }

@@ -5,7 +5,7 @@ import axios from 'axios'
 
 const Form = props => {
 
-    const { setLoggedIn, setLoading } = props
+    const { setLoggedIn } = props
 
     const [ register, setRegister ] = useState(false)
     const [ formState, setFormState ] = useState({})
@@ -44,7 +44,7 @@ const Form = props => {
     const handleLogin = e => {
         e.preventDefault()
 
-        const reqOptions = {
+        let reqOptions = {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -57,13 +57,22 @@ const Form = props => {
         fetch("http://localhost:8080/api/login", reqOptions)
             .then(res => res.json())
             .then(data => {
+                // sessionStorage.setItem("loggedIn", JSON.stringify(true))
+                // sessionStorage.setItem("id", data.id)
+                // setLoggedIn(true)
                 // setLoading(true)
-                // console.log(data)
+                console.log(data)
                 setTimeout(() => {
-                    sessionStorage.setItem("loggedIn", JSON.stringify(true))
                     sessionStorage.setItem("id", data.id)
-                    setLoggedIn(true)
-                }, 1500);
+                    if (data.id > 0) {
+                        sessionStorage.setItem("loggedIn", JSON.stringify(true))
+                        setLoggedIn(true)
+                    }
+                    if (data.id === undefined) {
+                        sessionStorage.setItem("loggedIn", JSON.stringify(false))
+                        setLoggedIn(false)
+                    }
+                }, 1000);
             })
             .catch(err => {console.log(err)})
             
@@ -74,7 +83,7 @@ const Form = props => {
     const handleRegister = e => {
         e.preventDefault()
 
-        const reqOptions = {
+        let reqOptions = {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -89,9 +98,9 @@ const Form = props => {
             .then(data => {
                 // setLoading(true)
                 setTimeout(() => {
-                    setLoggedIn(true)
                     sessionStorage.setItem("id", data.id)
                     sessionStorage.setItem("loggedIn", JSON.stringify(true))
+                    setLoggedIn(true)
                 }, 1500);
                 // navigate("/chat")
             })

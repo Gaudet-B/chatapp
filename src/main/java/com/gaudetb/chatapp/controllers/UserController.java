@@ -66,6 +66,7 @@ public class UserController {
 	// ============> ACTION ROUTES <============
 	
 	@PostMapping("/api/register")
+//	@PostMapping(path = "/api/register", consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
 //	@PostMapping(path = "/api/register", consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE}, produces = {MediaType.APPLICATION_ATOM_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<User> registerUser(@RequestBody User user, BindingResult result, HttpSession session) {
 		System.out.println(user.getEmail());

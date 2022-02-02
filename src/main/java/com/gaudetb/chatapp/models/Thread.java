@@ -1,8 +1,10 @@
 package com.gaudetb.chatapp.models;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -24,13 +26,20 @@ import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
+//import com.gaudetb.chatapp.models.Message;
+
 
 @Entity
-@Table(name = "users")
-public class Thread {
+@Table(name = "threads")
+public class Thread implements Serializable {
 	
 	// ============> PRIMARY KEY <============
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3093826231698297758L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -39,7 +48,8 @@ public class Thread {
 	
 	
 	private String name;
-	private ArrayList<Message> history;
+//	private List<Message> history;
+	private ArrayList<Map<String, String>> history;
 
 	// ---------------------------
 	
@@ -49,9 +59,9 @@ public class Thread {
 	
 	// ============> RELATIONSHIPS <============
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "user_id")
-	private User creator;
+//	@ManyToOne(fetch = FetchType.LAZY)
+//	@JoinColumn(name = "user_id")
+//	private User creator;
 	
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(
@@ -65,10 +75,15 @@ public class Thread {
 	
 	public Thread() {}
 	
-	public Thread(User creator, List<User> users) {
-		this.setCreator(creator);
-		this.setUsers(users);
-	}
+//	public Thread(User creator, List<User> users) {
+//		List<Message> history = new List<Message>();
+//		ArrayList<Map<String, String>> history = new ArrayList<Map<String, String>>();
+		
+//		this.setName("");
+//		this.setHistory(new ArrayList<Message>());
+//		this.setCreator(creator);
+//		this.setUsers(users);
+//	}
 	
 	// ============> GETTERS & SETTERS <============
 
@@ -102,22 +117,22 @@ public class Thread {
 	/**
 	 * @return the name
 	 */
-	public ArrayList<Message> getHistory() {
+	public ArrayList<Map<String, String>> getHistory() {
 		return history;
 	}
 	
 	/**
 	 * @return the creator
 	 */
-	@JsonBackReference
-	public User getCreator() {
-		return creator;
-	}
+//	@JsonBackReference(value="threads-created")
+//	public User getCreator() {
+//		return creator;
+//	}
 	
 	/**
 	 * @return the users
 	 */
-	@JsonBackReference
+	@JsonBackReference(value="threads-joined")
 	public List<User> getUsers() {
 		return users;
 	}
@@ -156,16 +171,16 @@ public class Thread {
 	/**
 	 * @param name the name to set
 	 */
-	public void setHistory(ArrayList<Message> history) {
+	public void setHistory(ArrayList<Map<String, String>> history) {
 		this.history = history;
 	}
 
 	/**
 	 * @param creator the creator to set
 	 */
-	public void setCreator(User creator) {
-		this.creator = creator;
-	}
+//	public void setCreator(User creator) {
+//		this.creator = creator;
+//	}
 
 	/**
 	 * @param users the users to set

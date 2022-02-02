@@ -1,6 +1,7 @@
 package com.gaudetb.chatapp.models;
 
 import java.util.List;
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -27,10 +28,15 @@ import com.gaudetb.chatapp.models.Thread;
 
 @Entity
 @Table(name = "users")
-public class User {
+public class User implements Serializable {
 	
 	// ============> PRIMARY KEY <============
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7568012647105424913L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -62,8 +68,8 @@ public class User {
 	
 	// ============> RELATIONSHIPS <============ 
 	
-	@OneToMany(mappedBy = "creator", fetch = FetchType.LAZY)
-	private List<com.gaudetb.chatapp.models.Thread> threadsCreated;
+//	@OneToMany(mappedBy = "creator", fetch = FetchType.LAZY)
+//	private List<com.gaudetb.chatapp.models.Thread> threadsCreated;
 	
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(
@@ -130,15 +136,15 @@ public class User {
 	/**
 	 * @return the threadsCreated
 	 */
-	@JsonManagedReference
-	public List<com.gaudetb.chatapp.models.Thread> getThreadsCreated() {
-		return threadsCreated;
-	}
+//	@JsonManagedReference(value="threads-created")
+//	public List<com.gaudetb.chatapp.models.Thread> getThreadsCreated() {
+//		return threadsCreated;
+//	}
 	
 	/**
 	 * @return the threadsJoined
 	 */
-	@JsonManagedReference
+//	@JsonManagedReference(value="threads-joined")
 	public List<com.gaudetb.chatapp.models.Thread> getThreadsJoined() {
 		return threadsJoined;
 	}
@@ -199,9 +205,9 @@ public class User {
 	/**
 	 * @param threadsCreated the threadsCreated to set
 	 */
-	public void setThreadsCreated(List<com.gaudetb.chatapp.models.Thread> threadsCreated) {
-		this.threadsCreated = threadsCreated;
-	}
+//	public void setThreadsCreated(List<com.gaudetb.chatapp.models.Thread> threadsCreated) {
+//		this.threadsCreated = threadsCreated;
+//	}
 	
 	/**
 	 * @param threadsJoined the threadsJoined to set
