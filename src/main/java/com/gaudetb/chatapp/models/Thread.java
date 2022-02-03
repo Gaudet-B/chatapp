@@ -15,40 +15,33 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Positive;
-import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-
-//import com.gaudetb.chatapp.models.Message;
 
 
 @Entity
 @Table(name = "threads")
 public class Thread implements Serializable {
 	
-	// ============> PRIMARY KEY <============
-	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -3093826231698297758L;
+	
+	
+	// ============> PRIMARY KEY <============
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+	
 	// ============> MEMBER VARIABLES <============
 	
-	
 	private String name;
-//	private List<Message> history;
 	private ArrayList<Map<String, String>> history;
 
 	// ---------------------------
@@ -57,11 +50,8 @@ public class Thread implements Serializable {
 	private Date createdAt;
 	private Date updatedAt;
 	
-	// ============> RELATIONSHIPS <============
 	
-//	@ManyToOne(fetch = FetchType.LAZY)
-//	@JoinColumn(name = "user_id")
-//	private User creator;
+	// ============> RELATIONSHIPS <============
 	
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(
@@ -71,19 +61,11 @@ public class Thread implements Serializable {
 			)
 	private List<User> users;
 	
+	
 	// ============> CONSTRUCTORS <============
 	
 	public Thread() {}
 	
-//	public Thread(User creator, List<User> users) {
-//		List<Message> history = new List<Message>();
-//		ArrayList<Map<String, String>> history = new ArrayList<Map<String, String>>();
-		
-//		this.setName("");
-//		this.setHistory(new ArrayList<Message>());
-//		this.setCreator(creator);
-//		this.setUsers(users);
-//	}
 	
 	// ============> GETTERS & SETTERS <============
 

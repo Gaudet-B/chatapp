@@ -28,7 +28,6 @@ const History = props => {
     const handleSend = e => {
         e.preventDefault()
 
-        // let content = document.getElementById("msg").value;
         let content = messageText
         let json = JSON.stringify({
             "from": user,
@@ -71,18 +70,18 @@ const History = props => {
                 {(activeThread.history) ? activeThread.history.map((message, idx) => {
                     return(
                         (message.from === sessionStorage.getItem("id")) ?
-                        <div className="text-end" key={idx}>{message.content}</div>
+                        <div className="d-flex flex-row justify-content-end" key={idx}><p className="bg-info text-dark p-1" style={{ width: "fit-content", maxWidth: "60%", border: "1px solid transparent", borderRadius: "5% / 8%" }} >{message.content}</p></div>
                         :
-                        <div className="text-start" key={idx}>{message.content}</div>
+                        <div className="d-flex flex-row justify-content-start" key={idx}><p className="bg-secondary text-light p-1" style={{ width: "fit-content", maxWidth: "60%", border: "1px solid transparent", borderRadius: "5% / 8%" }} >{message.content}</p></div>
                     )
                 }) : null}
 
                 {(messages.length > 0) ? messages.map((message, idx) => {
                     return(
                         (message.from === sessionStorage.getItem("id")) ?
-                        <div className="text-end" key={idx}>{message.content}</div>
+                        <div className="d-flex flex-row justify-content-end" key={idx}><p className="bg-info text-dark p-1" style={{ width: "fit-content", maxWidth: "60%", border: "1px solid transparent", borderRadius: "5% / 8%" }} >{message.content}</p></div>
                         :
-                        <div className="text-start" key={idx}>{message.content}</div>
+                        <div className="d-flex flex-row justify-content-start" key={idx}><p className="bg-secondary text-light p-1" style={{ width: "fit-content", maxWidth: "60%", border: "1px solid transparent", borderRadius: "5% / 8%" }} >{message.content}</p></div>
                     )
                 }) : null}
                 <SockJsClient url={ "http://localhost:8080/handler" } headers={headers} topics={["/topic/all"]}

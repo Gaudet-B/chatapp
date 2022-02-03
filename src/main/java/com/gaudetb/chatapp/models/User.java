@@ -13,7 +13,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
@@ -22,13 +21,14 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.gaudetb.chatapp.models.Thread;
+//import com.fasterxml.jackson.annotation.JsonManagedReference;
+//import com.gaudetb.chatapp.models.Thread;
 
 
 @Entity
 @Table(name = "users")
 public class User implements Serializable {
+	
 	
 	// ============> PRIMARY KEY <============
 	
@@ -40,6 +40,7 @@ public class User implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
 	
 	// ============> MEMBER VARIABLES <============
 	

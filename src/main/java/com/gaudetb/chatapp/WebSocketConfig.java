@@ -7,13 +7,21 @@ import org.springframework.web.socket.config.annotation.AbstractWebSocketMessage
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 
-//@CrossOrigin
+
 @CrossOrigin(origins = "http://localhost:3000")
 @SuppressWarnings("deprecation")
 @Configuration
 @EnableWebSocketMessageBroker
 public class WebSocketConfig extends AbstractWebSocketMessageBrokerConfigurer {
 
+//	===> { NOTE } <===
+//		
+//		the following code and explanatory comments were taken from
+//		https://github.com/lahsivjar/spring-websocket-template/tree/master/with-sockjs
+//	
+//		{ END NOTE }
+//	
+	
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/handler").setAllowedOrigins("http://localhost:3000").withSockJS();

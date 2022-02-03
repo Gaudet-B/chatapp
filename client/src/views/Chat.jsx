@@ -14,62 +14,9 @@ const Chat = props => {
     const [ user, setUser ] = useState({})
     const [ allChatters, setAllChatters ] = useState([])
     const [ currentChatter, setCurrentChatter ] = useState()
-    // const [ currentChatters, setCurrentChatters ] = useState([])
     const [ chatting, setChatting ] = useState(false)
     const [ activeThread, setActiveThread ] = useState(false)
     const [ threads, setThreads ] = useState([])
-    // const [ webSocket, setWebSocket ] = useState()
-    // const [ messageText, setMessageText ] = useState()
-    // const [ connected, setConnected ] = useState(false)
-    // const [ messages, setMessages ] = useState([])
-    // const [ clientRef, setClientRef ] = useState()
-
-    const handleThread = id => {
-        // setThread(threads[id])
-    }
-
-    // const headers = {
-    //     crossDomain: true,
-    //     withCredentials: true,
-    // }
-
-    // const connect = id => {
-
-    //     console.log(id)
-        
-    //     let host = document.location.host
-    //     let host = "http://localhost:8080"
-    //     let pathname = document.location.pathname
-    //     console.log(`host: ${host}, path: ${pathname}`)
-        
-    //     let ws = new WebSocket("ws://" +host  + pathname + "chat/" + id)
-    //     console.log(ws)
-    //     setWebSocket(ws)
-    //     console.log(webSocket)
-
-    //     webSocket.onmessage = e => {
-    //         let log = document.getElementById("history")
-    //         console.log(e.data)
-    //         let message = JSON.parse(e.data)
-    //         log.innerHTML += message.from + " : " + message.content + "\n"
-    //     }
-    // }
-
-    // const handleSend = e => {
-    //     e.preventDefault()
-
-    //     // let content = document.getElementById("msg").value;
-    //     let content = messageText
-    //     let json = JSON.stringify({
-    //         "from": sessionStorage.getItem("id"),
-    //         "to": currentChatter,
-    //         "content": content
-    //     });
-    //     clientRef.sendMessage("/app/all", json)
-    //     document.getElementById("chatInput").value = ""
-    // }
-
-    // const handleChange = e => setMessageText(e.target.value)
     
     const handleNewThread = (creator, user, options) => {
     
@@ -104,48 +51,20 @@ const Chat = props => {
         fetch(`http://localhost:8080/api/fetchthread/${sessionStorage.getItem("id")}/${id}`, reqOptions)
             .then(res => res.json())
             .then(data => setActiveThread(data))
-            // .then(() => {
-            //     console.log(activeThread)
-            //     if (activeThread.length <= 0 || activeThread === undefined) return handleNewThread(sessionStorage.getItem("id"), id, reqOptions)
-            // })
             .then(() => {
                 setCurrentChatter(id)
                 setChatting(true)
             })
             .catch(err => {
-                // if (activeThread === undefined) handleNewThread(sessionStorage.getItem("id"), id, reqOptions)
-                // console.log(err)
                 handleNewThread(sessionStorage.getItem("id"), id, reqOptions)
             })
-
-        // console.log(activeThread)
-        // console.log(activeThread.length)
-        // setTimeout(() => {
-        //     if (activeThread.length <= 0 || activeThread === undefined) return handleNewThread(sessionStorage.getItem("id"), id, reqOptions)
-        // }, 1000);
-
     }
     
-    // =================================================================
-
-
-
-    // const onMessageReceive = (msg, topic) => setMessages(messages => [...messages, msg])
-
-    // const sendMessage = (msg, selfMsg) => {
-    //     try {
-    //         clientRef.sendMessage("http://localhost:8080/api/chat", JSON.stringify(selfMsg))
-    //         return true
-    //     } catch(e) {
-    //         return false
-    //     }
-    // }
-
-    // =================================================================
-
     const handleSend = e => {
         e.preventDefault()
     }
+
+    var otherUsers
 
     useEffect(() => {
 
@@ -161,7 +80,6 @@ const Chat = props => {
                             .then(res => res.json())
                             .then(data => setThreads(data))
                             .then(() => setTimeout(() => setLoading(false), 2000))
-                                // setLoading(false))
                             .catch(err => console.log(err))
                     )
                     .catch(err => console.log(err))
@@ -181,17 +99,16 @@ const Chat = props => {
                 <div className={"text-light my-2 p-2 " + styles.conversations} >
                     <p className="text-secondary fw-bold ms-1" style={{ fontSize: "18pt" }} >conversations</p>
                     <div className="d-flex flex-column ms-2" >
-                        <div id="" className="d-flex flex-row" style={{ cursor: "pointer" }} onClick={handleClick} ><img src={lightConvo} alt="" style={{ transform: "scale(0.6)" }} /> <p className="ms-2" style={{ fontSize: "12pt" }} > user_one, user_...</p> </div>
-                        <div id="" className="d-flex flex-row" style={{ cursor: "pointer" }} onClick={handleClick} ><img src={lightConvo} alt="" style={{ transform: "scale(0.6)" }} /> <p className="ms-2" style={{ fontSize: "12pt" }} > user_two, user_...</p> </div>
-                        <div id="" className="d-flex flex-row" style={{ cursor: "pointer" }} onClick={handleClick} ><img src={lightConvo} alt="" style={{ transform: "scale(0.6)" }} /> <p className="ms-2" style={{ fontSize: "12pt" }} > user_three, use...</p> </div>
-                        <div id="" className="d-flex flex-row" style={{ cursor: "pointer" }} onClick={handleClick} ><img src={lightConvo} alt="" style={{ transform: "scale(0.6)" }} /> <p className="ms-2" style={{ fontSize: "12pt" }} > user_four, user...</p> </div>
-                        <div id="" className="d-flex flex-row" style={{ cursor: "pointer" }} onClick={handleClick} ><img src={lightConvo} alt="" style={{ transform: "scale(0.6)" }} /> <p className="ms-2" style={{ fontSize: "12pt" }} > user_five, user...</p> </div>
-                        <div id="" className="d-flex flex-row" style={{ cursor: "pointer" }} onClick={handleClick} ><img src={lightConvo} alt="" style={{ transform: "scale(0.6)" }} /> <p className="ms-2" style={{ fontSize: "12pt" }} > user_six, user_...</p> </div>
+                        {threads.map((user, idx) => {
+                            return(
+                                <div id={"thread-" + (idx +1)} key={idx} className="d-flex flex-row" style={{ cursor: "pointer" }} onClick={() => handleClick(user.id)}> <img src={lightConvo} alt="" style={{ transform: "scale(0.6)" }} /> <p className="ms-2" style={{ fontSize: "12pt" }} > {user.displayName} </p> </div>
+                            )
+                        })}
                     </div>
                 </div>
                 <div className="border border-secondary rounded" style={{ width: "94%", height: "1px", margin: "0px auto" }} ></div>
                 <div className={"text-light my-2 p-2 " + styles.conversations} >
-                    <div className="d-flex flex-row"><p className="text-secondary fw-bold ms-1" style={{ fontSize: "18pt" }} >allChatters</p> <img src={lightUsers} alt="" height="25px" className="ms-3 mt-1" /> </div>
+                    <div className="d-flex flex-row"><p className="text-secondary fw-bold ms-1" style={{ fontSize: "18pt" }} >all chatters</p> <img src={lightUsers} alt="" height="25px" className="ms-3 mt-1" /> </div>
                     <div className="d-flex flex-column ms-3" >
                         {allChatters.map((chatter, idx) => {
                             if (chatter.id !== user.id) return(
@@ -209,17 +126,6 @@ const Chat = props => {
                 :
                 <History activeThread={activeThread} user={sessionStorage.getItem("id")} chatter={currentChatter} chatting={chatting} />
                 }
-                    {/* <div> */}
-                    {/* <TalkBox topic="react-websocket-template" currentUserId={user.id}
-                    currentUser={user} messages={messages}
-                    onSendMessage={sendMessage} connected={connected}/> */}
-
-                    {/* <SockJsClient url={ "http://localhost:8080/handler" } headers={headers} topics={["/topic/all"]}
-                    onMessage={onMessageReceive} ref={(client) => setClientRef(client)}
-                    onConnect={() => setConnected(true)}
-                    onDisconnect={() => setConnected(false)}
-                    debug={ false }/> */}
-                {/* </div> */}
                 {(!chatting) ? 
                 <form id="messageInput" onSubmit={handleSend} className="form" >
                     <div className="d-flex flex-row justify-content-between mt-1" >

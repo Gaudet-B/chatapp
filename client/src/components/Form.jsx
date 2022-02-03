@@ -1,7 +1,5 @@
 import { useState } from 'react'
 
-import axios from 'axios'
-
 
 const Form = props => {
 
@@ -9,21 +7,6 @@ const Form = props => {
 
     const [ register, setRegister ] = useState(false)
     const [ formState, setFormState ] = useState({})
-
-    const instance = axios.create({
-        withCredentials: true,
-        baseURL: "http://localhost:8080/api",
-        crossDomain: true,
-        
-        // contentType: "application/json; charset=utf-8"
-        // contentType: "application/json"
-        // header: {
-        //     method: "POST",
-        //     contentType: "application/json"
-        // }
-    })
-
-    // const navigate = useNavigate
 
     const handleShowRegister = e => {
         e.preventDefault()
@@ -57,10 +40,6 @@ const Form = props => {
         fetch("http://localhost:8080/api/login", reqOptions)
             .then(res => res.json())
             .then(data => {
-                // sessionStorage.setItem("loggedIn", JSON.stringify(true))
-                // sessionStorage.setItem("id", data.id)
-                // setLoggedIn(true)
-                // setLoading(true)
                 console.log(data)
                 setTimeout(() => {
                     sessionStorage.setItem("id", data.id)
@@ -75,9 +54,6 @@ const Form = props => {
                 }, 1000);
             })
             .catch(err => {console.log(err)})
-            
-        // navigate("/chat")
-        // if (check) navigate("/chat")
     }
 
     const handleRegister = e => {
@@ -96,48 +72,14 @@ const Form = props => {
         fetch("http://localhost:8080/api/register", reqOptions)
             .then(res => res.json())
             .then(data => {
-                // setLoading(true)
                 setTimeout(() => {
                     sessionStorage.setItem("id", data.id)
                     sessionStorage.setItem("loggedIn", JSON.stringify(true))
                     setLoggedIn(true)
                 }, 1500);
-                // navigate("/chat")
             })
             .catch(err => console.log(err))
-
-
-        // let jsonObj = JSON.stringify(formState)
-        // console.log(jsonObj)
-        // 
-        // axios.post("http://localhost:8080/api/register", {
-        //     withCredentials: true,
-        //     crossDomain: true,
-        //     contentType: "application/json",
-        //     data: formState
-        // })
-        //     .then(res => {
-        //         console.log(res.data)
-        //         navigate("/chat")
-        //     })
-            
-        // instance.post("/register", {data: jsonObj})
-        // instance.post("/register", jsonObj)
-        //     .then(res => {
-            //         console.log(res.data)
-            //         navigate("/chat")
-            //     })
-            //     .catch(err => {
-                //         const {errors} = err.response.data
-                //         let errObj = {}
-                //         for (const [key, value] of Object.entries(errors)) {
-                    //             errObj[key] = value.message
-                    //         }
-                    //         console.log(err.response.data)
-                    //     })
-
     }
-
 
     return (
 

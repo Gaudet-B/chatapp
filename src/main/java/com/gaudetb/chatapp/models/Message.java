@@ -1,7 +1,7 @@
 package com.gaudetb.chatapp.models;
 
 import java.io.Serializable;
-import java.util.ArrayList;
+
 
 public class Message implements Serializable {
     /**
